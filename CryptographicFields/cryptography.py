@@ -3,7 +3,7 @@ from Crypto.Util.Padding import pad,unpad
 from django.conf import settings
 key=getattr(settings, 'SECRET_KEY', None)[:32].encode()
 iv=getattr(settings, 'SECRET_KEY', None)[-16:].encode()
-def Encrypter(*args):
+def encrypter(*args):
   cipher=AES.new(key,AES.MODE_CBC,iv)
   for i in args:
     if type(i)==bytes:
@@ -14,7 +14,7 @@ def Encrypter(*args):
     break
   return cipher_text
 
-def Decrypter(*args):
+def decrypter(*args):
   cipher=AES.new(key,AES.MODE_CBC,iv)
   for i in args:
     if type(i)==bytes:

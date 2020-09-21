@@ -1,6 +1,6 @@
 from django.db import models
 from django.core import checks, exceptions, validators
-from.cryptography import Encrypter,Decrypter
+from.cryptography import encrypter,decrypter
 import ast
 from django.db.backends.utils import format_number
 import decimal
@@ -14,11 +14,11 @@ class BooleanField(models.BooleanField):
         print('called my one')
         if value in (True, False):
             # 1/0 are equal to True/False. bool() converts former to latter.
-            return Encrypter(bool(value))
+            return encrypter(bool(value))
         elif value in ('t', 'True', '1','T','Y','Yes','yes','y'):
-            return Encrypter(True)
+            return encrypter(True)
         elif value in ('f', 'False', '0','F','N','No','no','n'):
-            return Encrypter(False)
+            return encrypter(False)
         else:
             raise exceptions.ValidationError(
             self.error_messages['invalid_nullable' if self.null else 'invalid'],
@@ -32,9 +32,9 @@ class BooleanField(models.BooleanField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return ast.literal_eval(Decrypter(bytes(value)).decode())
+                return ast.literal_eval(decrypter(bytes(value)).decode())
             else:
-                return ast.literal_eval(Decrypter(value).decode())
+                return ast.literal_eval(decrypter(value).decode())
         else:
             return None
     
@@ -51,8 +51,8 @@ class CharField(models.CharField):
         if isinstance(value,bytes):
             return value
         if isinstance(value, str) or value is None:
-            return Encrypter(value)
-        return Encrypter(str(value))
+            return encrypter(value)
+        return encrypter(str(value))
 
     def get_prep_value(self, value):
         return self.to_python(value)
@@ -60,9 +60,9 @@ class CharField(models.CharField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -87,7 +87,7 @@ class DecimalField(models.DecimalField):
                 params={'value': value},
             )
     def get_db_prep_save(self, value, connection):
-        return Encrypter(connection.ops.adapt_decimalfield_value(self.to_python(value), self.max_digits, self.decimal_places))
+        return encrypter(connection.ops.adapt_decimalfield_value(self.to_python(value), self.max_digits, self.decimal_places))
     def get_prep_value(self, value):
         return self.to_python(value)
     
@@ -97,9 +97,9 @@ class DecimalField(models.DecimalField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return format_number(decimal.Decimal(Decrypter(bytes(value)).decode()),self.max_digits,self.decimal_places)
+                return format_number(decimal.Decimal(decrypter(bytes(value)).decode()),self.max_digits,self.decimal_places)
             else:
-                return format_number(decimal.Decimal(Decrypter(value).decode()),self.max_digits,self.decimal_places)
+                return format_number(decimal.Decimal(decrypter(value).decode()),self.max_digits,self.decimal_places)
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -113,7 +113,7 @@ class EmailField(models.EmailField):
         print('caleed email')
         if isinstance(value, str) or value is None:
             validators.EmailValidator(value)
-            return Encrypter(value)
+            return encrypter(value)
         if isinstance(value,bytes):
             return value
     def get_prep_value(self, value):
@@ -130,9 +130,9 @@ class EmailField(models.EmailField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -144,10 +144,10 @@ class FilePathField(models.FilePathField):
 
     def to_python(self, value):
         if isinstance(value, str) or value is None:
-            return Encrypter(value)
+            return encrypter(value)
         if isinstance(value,bytes):
             return value
-        return Encrypter(str(value))
+        return encrypter(str(value))
 
     def get_prep_value(self, value):
         return self.to_python(value)
@@ -155,9 +155,9 @@ class FilePathField(models.FilePathField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -173,7 +173,7 @@ class FloatField(models.FloatField):
         if value is None:
             return value
         try:
-            return Encrypter(float(value))
+            return encrypter(float(value))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
                 self.error_messages['invalid'],
@@ -184,9 +184,9 @@ class FloatField(models.FloatField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return float(Decrypter(bytes(value)).decode())
+                return float(decrypter(bytes(value)).decode())
             else:
-                return float(Decrypter(value).decode())
+                return float(decrypter(value).decode())
         else:
             return None
     
@@ -199,9 +199,9 @@ class IntegerField (models.IntegerField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return int(Decrypter(bytes(value)).decode())
+                return int(decrypter(bytes(value)).decode())
             else:
-                return int(Decrypter(value).decode())
+                return int(decrypter(value).decode())
         else:
             return None
     def get_prep_value(self, value):
@@ -214,7 +214,7 @@ class IntegerField (models.IntegerField):
         if isinstance(value,bytes):
             return value
         try:
-            return Encrypter(int(value))
+            return encrypter(int(value))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
                 self.error_messages['invalid'],
@@ -254,15 +254,15 @@ class GenericIPAddressField(models.GenericIPAddressField):
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
             value = self.get_prep_value(value)
-        return Encrypter(connection.ops.adapt_ipaddressfield_value(value))
+        return encrypter(connection.ops.adapt_ipaddressfield_value(value))
     def get_prep_value(self, value):
         return self.to_python(value)
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
 class PositiveBigIntegerField(models.PositiveBigIntegerField):
@@ -270,9 +270,9 @@ class PositiveBigIntegerField(models.PositiveBigIntegerField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return int(Decrypter(bytes(value)).decode())
+                return int(decrypter(bytes(value)).decode())
             else:
-                return int(Decrypter(value).decode())
+                return int(decrypter(value).decode())
         else:
             return None
     def get_prep_value(self, value):
@@ -286,7 +286,7 @@ class PositiveBigIntegerField(models.PositiveBigIntegerField):
             return value
         try:
             if int(value)>=0:
-                return Encrypter(int(value))
+                return encrypter(int(value))
             else:
                 raise exceptions.ValidationError(
                 self.negativeint,
@@ -307,9 +307,9 @@ class PositiveIntegerField(models.PositiveIntegerField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return int(Decrypter(bytes(value)).decode())
+                return int(decrypter(bytes(value)).decode())
             else:
-                return int(Decrypter(value).decode())
+                return int(decrypter(value).decode())
         else:
             return None
     def get_prep_value(self, value):
@@ -323,7 +323,7 @@ class PositiveIntegerField(models.PositiveIntegerField):
             return value
         try:
             if int(value)>=0:
-                return Encrypter(int(value))
+                return encrypter(int(value))
             else:
                 raise exceptions.ValidationError(
                 self.negativeint,
@@ -343,9 +343,9 @@ class PositiveSmallIntegerField(models.PositiveSmallIntegerField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return int(Decrypter(bytes(value)).decode())
+                return int(decrypter(bytes(value)).decode())
             else:
-                return int(Decrypter(value).decode())
+                return int(decrypter(value).decode())
         else:
             return None
     def get_prep_value(self, value):
@@ -359,7 +359,7 @@ class PositiveSmallIntegerField(models.PositiveSmallIntegerField):
             return value
         try:
             if int(value)>=0:
-                return Encrypter(int(value))
+                return encrypter(int(value))
             else:
                 raise exceptions.ValidationError(
                 self.negativeint,
@@ -382,8 +382,8 @@ class SlugField(models.SlugField):
         if isinstance(value,bytes):
             return value
         if isinstance(value, str) or value is None:
-            return Encrypter(value)
-        return Encrypter(str(value))
+            return encrypter(value)
+        return encrypter(str(value))
 
     def get_prep_value(self, value):
         return self.to_python(value)
@@ -391,9 +391,9 @@ class SlugField(models.SlugField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -403,9 +403,9 @@ class SmallIntegerField(models.SmallIntegerField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return int(Decrypter(bytes(value)).decode())
+                return int(decrypter(bytes(value)).decode())
             else:
-                return int(Decrypter(value).decode())
+                return int(decrypter(value).decode())
         else:
             return None
     def get_prep_value(self, value):
@@ -418,7 +418,7 @@ class SmallIntegerField(models.SmallIntegerField):
         if isinstance(value,bytes):
             return value
         try:
-            return Encrypter(int(value))
+            return encrypter(int(value))
         except (TypeError, ValueError):
             raise exceptions.ValidationError(
                 self.error_messages['invalid'],
@@ -434,8 +434,8 @@ class TextField(models.CharField):
         if isinstance(value,bytes):
             return value
         if isinstance(value, str) or value is None:
-            return Encrypter(value)
-        return Encrypter(str(value))
+            return encrypter(value)
+        return encrypter(str(value))
 
     def get_prep_value(self, value):
         return self.to_python(value)
@@ -443,9 +443,9 @@ class TextField(models.CharField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -460,8 +460,8 @@ class URLField(models.CharField):
             return value
         if isinstance(value, str):
             url(value)
-            return Encrypter(value)
-        return Encrypter(str(value))
+            return encrypter(value)
+        return encrypter(str(value))
 
     def get_prep_value(self, value):
         return self.to_python(value)
@@ -469,9 +469,9 @@ class URLField(models.CharField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
             if isinstance(value,memoryview):
-                return str(Decrypter(bytes(value)).decode())
+                return str(decrypter(bytes(value)).decode())
             else:
-                return str(Decrypter(value).decode())
+                return str(decrypter(value).decode())
         else:
             return None
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -480,7 +480,7 @@ class URLField(models.CharField):
 class DateTimeField(models.DateTimeField):
     def from_db_value(self, value, expression, connection):
         if value is not None:
-            return Date(Decrypter(value).decode()).date
+            return Date(decrypter(value).decode()).date
         else:
             return value
     
