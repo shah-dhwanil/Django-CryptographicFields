@@ -19,7 +19,7 @@ class CryptogaphicModel(models.Model):
 ```
 The data will now be automatically encrypted when saved to the database. encrypt uses an encryption that allows for bi-directional data retrieval.
 
-# Advantages over other projects like this
+# Advantages over other projects:-
 1. **_Supports data retrival_**
 2. **_Supports custom query_**
 3. **_Supports lookups_**
