@@ -26,6 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Version Information**
  - Python[e.g. 3.6,3.8]
  - Package Version [eg 1.1.1,1.0.0]
+ - Database Engine [eg MySql,SQlite]
  - Os
 
 **Additional context**
