@@ -247,7 +247,7 @@ class GenericIPAddressField(models.GenericIPAddressField):
         value = value.strip()
         if ':' in value:
             validators.validate_ipv46_address(value)
-            return clean_ipv6_address(value, self.unpack_ipv4, self.error_messages['invalid'])
+            return self.clean_ipv6_address(value, self.unpack_ipv4, self.error_messages['invalid'])
         validators.validate_ipv46_address(value)
         return value
 
@@ -459,7 +459,7 @@ class URLField(models.CharField):
         if isinstance(value,bytes):
             return value
         if isinstance(value, str):
-            url(value)
+            self.url(value)
             return encrypter(value)
         return encrypter(str(value))
 
@@ -477,10 +477,4 @@ class URLField(models.CharField):
     def get_db_prep_value(self, value, connection, prepared=False):
         return self.to_python(value)
 
-class DateTimeField(models.DateTimeField):
-    def from_db_value(self, value, expression, connection):
-        if value is not None:
-            return Date(decrypter(value).decode()).date
-        else:
-            return value
     
