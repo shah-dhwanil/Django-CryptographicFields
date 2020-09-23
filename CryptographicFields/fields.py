@@ -11,7 +11,6 @@ class BooleanField(models.BooleanField):
     def to_python(self,value):
         if isinstance(value,bytes):
             return value
-        print('called my one')
         if value in (True, False):
             # 1/0 are equal to True/False. bool() converts former to latter.
             return encrypter(bool(value))
