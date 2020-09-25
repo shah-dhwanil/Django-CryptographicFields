@@ -6,7 +6,6 @@ from django.db.backends.utils import format_number
 import decimal
 from django.utils.translation import gettext_lazy as _
 from django.db.models.fields import NOT_PROVIDED
-from timestring import Date
 class BooleanField(models.BooleanField):
     def to_python(self,value):
         if isinstance(value,bytes):
