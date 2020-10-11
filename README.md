@@ -22,8 +22,7 @@ The data will now be automatically encrypted when saved to the database. encrypt
 # Advantages over other projects:-
 1. **_Supports data retrival_**
 2. **_Supports custom query_**
-3. **_Supports lookups_**
-4. **_Supports Q() queries_**
+3. **_Supports Q() queries_**
 
 # Requirements
 * Python (3.6+)
