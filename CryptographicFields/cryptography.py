@@ -2,6 +2,7 @@ from Crypto.Cipher import AES
 from django.conf import settings
 key=getattr(settings, 'SECRET_KEY', None)[:32].encode()
 iv=getattr(settings, 'SECRET_KEY', None)[-16:].encode()
+# used for encrypting data
 def encrypter(*args):
   cipher=AES.new(key,AES.MODE_CFB,iv)
   for i in args:
@@ -12,7 +13,7 @@ def encrypter(*args):
     cipher_text=cipher.encrypt(data)
     break
   return cipher_text
-
+# used for decrypting data
 def decrypter(*args):
   cipher=AES.new(key,AES.MODE_CFB,iv)
   for i in args:
