@@ -11,11 +11,11 @@ A Django app for using cryptography in Django Models. It support bi-directional 
 # Creating Models using CryptographicFields
 ## Cryptography by example
 ```py
-from CrptographicFields import fields
+from CrptographicFields import modelfields
 from django.db import models
 
 class CryptogaphicModel(models.Model):
-    name=fields.CharField(max_length=120)
+    name=modelfields.CharField(max_length=120)
 ```
 The data will now be automatically encrypted when saved to the database. encrypt uses an encryption that allows for bi-directional data retrieval.
 
@@ -28,6 +28,7 @@ The data will now be automatically encrypted when saved to the database. encrypt
 * Python (3.6+)
 * Pycryptodome (3.9+)
 * Django (3.0+)
+* Timestring
 # List of Model Fields supported by CryptographicFields:
 * ___BigIntegerField___
 * ___BooleanField___
@@ -45,3 +46,6 @@ The data will now be automatically encrypted when saved to the database. encrypt
 * ___SmallIntegerField___
 * ___TextField___
 * ___URLField___
+* ___DateField___
+* ___DateTimeField___
+* ___TimeField___
