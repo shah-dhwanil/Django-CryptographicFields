@@ -52,4 +52,5 @@ The data will now be automatically encrypted when saved to the database. encrypt
 * ___SmallIntegerField___
 * ___TextField___
 * ___URLField___
+* ___UUIDField___
 * ___TimeField___
