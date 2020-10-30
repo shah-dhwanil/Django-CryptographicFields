@@ -1,5 +1,5 @@
 from django.conf import settings
-from .exceptions import LengthError
+from .utils import LengthError
 from Crypto.Cipher import AES
 def get_key(settings)->str:
     try:
@@ -27,8 +27,8 @@ def from_hex(hexstring)->bytearray:
     return bytearray.fromhex(hexstring)
 
 def encrypt(string)->hex:
-    print('encrypt called')
+    print('encrypt called',string)
     return to_hex(AES.new(type_check(get_key(settings)[:32]),AES.MODE_CFB,type_check(get_key(settings)[-16:])).encrypt(type_check(string)))
 def decrypt(hexstring)->bytearray:
-    print('decrypt called')
+    print('decrypt called',hexstring)
     return bytearray(AES.new(type_check(get_key(settings)[:32]),AES.MODE_CFB,type_check(get_key(settings)[-16:])).decrypt(type_check(from_hex(hexstring))))

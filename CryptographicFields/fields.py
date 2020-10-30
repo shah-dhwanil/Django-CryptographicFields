@@ -1,5 +1,6 @@
 from typing import Any
 from django.db import models
+from .utils import StartsWith
 from django.core import exceptions, validators
 from django.db.models.fields import PositiveIntegerRelDbTypeMixin
 from .cryptography import encrypt,decrypt
@@ -8,7 +9,6 @@ import datetime
 from django import forms
 from django.utils import timezone
 from timestring import Date
-from django.db.backends.utils import format_number
 from decimal import Decimal
 from uuid import UUID
 from django.utils.translation import gettext_lazy as _
@@ -204,18 +204,19 @@ class DecimalField(models.DecimalField):
 
     def to_python(self, value: Any) -> Any:
         print("to_python",value)
-        return self.clean(super().to_python(value),None)
+        return super().to_python(value)
 
     def get_prep_value(self, value: Any) -> Any:
         print("get_prep_value" , value)
         return self.to_python(value)
 
-    def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
+    def get_db_prep_save(self, value, connection,):
+        print("called get_db_prep_value",value)
         return encrypt(connection.ops.adapt_decimalfield_value(self.get_prep_value(value), self.max_digits, self.decimal_places))
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
-        return format_number(Decimal(decrypt(value).decode(),self.max_digits,self.decimal_places))
+        return float(decrypt(value).decode())
+        #return value
 
     def clean(self, value, model_instance):
         """
@@ -527,7 +528,7 @@ class BinaryField(models.BinaryField):
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
-        return bytes.fromhex(decrypt(value).decode())
+        return decrypt(value)
     
     def get_db_prep_value(self, value, connection, prepared=False):
         print("called get_db_prep_value")
@@ -546,6 +547,7 @@ class BinaryField(models.BinaryField):
         return value
 
 class UUIDField(models.UUIDField):
+
     def get_internal_type(self)-> str:
         return "TextField"
 
@@ -558,7 +560,8 @@ class UUIDField(models.UUIDField):
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
-        return UUID.hex(decrypt(value).decode())
+        #return UUID.hex(decrypt(value).decode())
+        return UUID(hex=decrypt(value).decode())
     
     def get_db_prep_value(self, value, connection, prepared=False):
         print("called get_db_prep_value")
@@ -575,3 +578,19 @@ class UUIDField(models.UUIDField):
         self.validate(value, model_instance)
         self.run_validators(value)
         return value
+
+
+CharField.register_lookup(StartsWith)
+BooleanField.register_lookup(StartsWith)
+DateField.register_lookup(StartsWith)
+DateTimeField.register_lookup(StartsWith)
+EmailField.register_lookup(StartsWith)
+GenericIPAddressField.register_lookup(StartsWith)
+SlugField.register_lookup(StartsWith)
+TextField.register_lookup(StartsWith)
+URLField.register_lookup(StartsWith)
+BinaryField.register_lookup(StartsWith)
+UUIDField.register_lookup(StartsWith)
+DateField.register_lookup(StartsWith,lookup_name="date")
+DateTimeField.register_lookup(StartsWith,lookup_name="date")
+TimeField.register_lookup(StartsWith,lookup_name="time")
