@@ -23,9 +23,9 @@ The data will now be automatically encrypted when saved to the database. encrypt
 1. **_Supports data retrival_**
 2. **_Supports custom query_**
 3. **_Supports Q() queries_**
-4. **_ Supports 'startswith' lookups for all String Based Fields_**
-5. **_ Supports 'date' lookup for Date,DateTime Fields_**
-6. **_ Supports 'time' lookup for TimeField_**
+4. **_Supports 'startswith' lookups for all String Based Fields_**
+5. **_Supports 'date' lookup for Date,DateTime Fields_**
+6. **_Supports 'time' lookup for TimeField_**
 
 # Requirements
 * Python (3.6+)
