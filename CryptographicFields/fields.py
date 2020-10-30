@@ -579,6 +579,26 @@ class UUIDField(models.UUIDField):
         self.run_validators(value)
         return value
 
+class FilePathField(models.FilePathField):
+    def get_internal_type(self)-> str:
+        return "TextField"
+
+    def to_python(self, value: Any) -> Any:
+        print("to_python",value)
+        return self.clean(super().to_python(value),None)
+
+    def get_prep_value(self, value: Any) -> Any:
+        print("get_prep_value" , value)
+        return self.to_python(value)
+
+    def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
+        return decrypt(value).decode()
+    
+    def get_db_prep_value(self, value, connection, prepared=False):
+        print("called get_db_prep_value")
+        if not prepared:
+            value = self.get_prep_value(value)
+        return encrypt(value)
 
 CharField.register_lookup(StartsWith)
 BooleanField.register_lookup(StartsWith)
@@ -591,6 +611,7 @@ TextField.register_lookup(StartsWith)
 URLField.register_lookup(StartsWith)
 BinaryField.register_lookup(StartsWith)
 UUIDField.register_lookup(StartsWith)
+FilePathField.register_lookup(StartsWith)
 DateField.register_lookup(StartsWith,lookup_name="date")
 DateTimeField.register_lookup(StartsWith,lookup_name="date")
 TimeField.register_lookup(StartsWith,lookup_name="time")
