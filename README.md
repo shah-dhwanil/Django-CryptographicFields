@@ -8,7 +8,13 @@ A Django app for using cryptography in Django Models. It support bi-directional 
         'CryptographicFields',
     ]
 ```
+## 2.Custom Encryption Key
+Set custom Encryption Key in settings.py
+```py
+ENCRYPTION_KEY="your_key"
+```
 # Creating Models using CryptographicFields
+
 ## Cryptography by example
 ```py
 from CrptographicFields import fields
