@@ -17,7 +17,7 @@ from django.db import models
 class CryptogaphicModel(models.Model):
     name=fields.CharField(max_length=120)
 ```
-The data will now be automatically encrypted when saved to the database. encrypt uses an encryption that allows for bi-directional data retrieval.
+The data will now be automatically encrypted when saved to the database.& decrypted when data is retrieved.
 
 # Advantages over other projects:-
 1. **_Supports data retrival_**
