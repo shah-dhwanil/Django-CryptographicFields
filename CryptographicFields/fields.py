@@ -12,23 +12,27 @@ from timestring import Date
 from decimal import Decimal
 from uuid import UUID
 from django.utils.translation import gettext_lazy as _
+"""
+to_python() make validations & checks type of the data
+get_db_prep_value() encrypts the data
+from_db_value() decrypts the data returned from the db
+pre_save() generates date ,datetime,time for the respestive fields
+get_db_prep_save() saves the value into db
+"""
 class CharField(models.CharField):
     def get_internal_type(self)-> str:
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return decrypt(value).decode()
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
@@ -48,15 +52,12 @@ class BooleanField(models.BooleanField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
@@ -79,15 +80,12 @@ class DateField(models.DateField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         # Casts dates into the format expected by the backend
         if not prepared:
             value = self.get_prep_value(value)
@@ -97,7 +95,6 @@ class DateField(models.DateField):
         return Date(decrypt(value).decode()).date.date()
 
     def pre_save(self, model_instance, add):
-        print('called  pre_save()')
         if self.auto_now or (self.auto_now_add and add):
             value = datetime.date.today()
             setattr(model_instance, self.attname, value)
@@ -120,15 +117,12 @@ class DateTimeField(models.DateTimeField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return super().get_prep_value(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         # Casts dates into the format expected by the backend
         if not prepared:
             value = self.get_prep_value(value)
@@ -161,15 +155,12 @@ class TimeField(models.TimeField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         # Casts dates into the format expected by the backend
         if not prepared:
             value = self.get_prep_value(value)
@@ -179,7 +170,6 @@ class TimeField(models.TimeField):
         return Date(decrypt(value).decode()).date.time()
 
     def pre_save(self, model_instance, add):
-        print('called  pre_save()')
         if self.auto_now or (self.auto_now_add and add):
             value = datetime.datetime.now().time()
             setattr(model_instance, self.attname, value)
@@ -203,15 +193,12 @@ class DecimalField(models.DecimalField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return super().to_python(value)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def get_db_prep_save(self, value, connection,):
-        print("called get_db_prep_value",value)
         return encrypt(connection.ops.adapt_decimalfield_value(self.get_prep_value(value), self.max_digits, self.decimal_places))
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
@@ -251,18 +238,15 @@ class FloatField(models.FloatField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return float(decrypt(value).decode())
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
@@ -282,18 +266,15 @@ class IntegerField(models.IntegerField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return int(decrypt(value).decode())
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
@@ -315,7 +296,6 @@ class BigIntegerField(IntegerField):
     description = _("Big (8 byte) integer")
     MAX_BIGINT = 9223372036854775807
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         value=self.clean(super().to_python(value),None)
         if value < (-self.MAX_BIGINT-1) or value > self.MAX_BIGINT:
             raise exceptions.ValidationError(self.error_messages['invalid'],code='invalid',
@@ -334,15 +314,12 @@ class GenericIPAddressField(models.GenericIPAddressField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value=self.get_prep_value(value)
         return encrypt(connection.ops.adapt_ipaddressfield_value(value))
@@ -368,7 +345,6 @@ class PositiveBigIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField):
         'invalid': _('“%(value)s” value must be less than greater than %(min).'),
     }
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         value=self.clean(super().to_python(value),None)
         if value < 0:
             raise exceptions.ValidationError(self.error_messages['invalid'],code='invalid',
@@ -387,7 +363,6 @@ class PositiveIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField):
         'invalid': _('“%(value)s” value must be less than greater than %(min).'),
     }
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         value=self.clean(super().to_python(value),None)
         if value < 0:
             raise exceptions.ValidationError(self.error_messages['invalid'],code='invalid',
@@ -407,7 +382,6 @@ class PositiveSmallIntegerField(PositiveIntegerRelDbTypeMixin, IntegerField):
         'invalid': _('“%(value)s” value must be less than greater than %(min).'),
     }
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         value=self.clean(super().to_python(value),None)
         if value < 0:
             raise exceptions.ValidationError(self.error_messages['invalid'],code='invalid',
@@ -461,18 +435,15 @@ class TextField(models.TextField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return decrypt(value).decode()
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
@@ -515,7 +486,6 @@ class BinaryField(models.BinaryField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         value=self.clean(value,None)
         if isinstance(value ,str):
             value=bytes(value,"UTF-8").hex()
@@ -524,14 +494,12 @@ class BinaryField(models.BinaryField):
         return value
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return decrypt(value)
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(connection.Database.Binary(value))
@@ -552,11 +520,9 @@ class UUIDField(models.UUIDField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
@@ -564,7 +530,6 @@ class UUIDField(models.UUIDField):
         return UUID(hex=decrypt(value).decode())
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value.hex)
@@ -584,18 +549,15 @@ class FilePathField(models.FilePathField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        print("to_python",value)
         return self.clean(super().to_python(value),None)
 
     def get_prep_value(self, value: Any) -> Any:
-        print("get_prep_value" , value)
         return self.to_python(value)
 
     def from_db_value(self, value:Any, expression:Any, connection:Any)-> Any:
         return decrypt(value).decode()
     
     def get_db_prep_value(self, value, connection, prepared=False):
-        print("called get_db_prep_value")
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
