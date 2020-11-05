@@ -22,7 +22,7 @@ ENCRYPTION_KEY="your_key"
 
 ## Cryptography by example
 ```py
-from CrptographicFields import fields
+from CryptographicFields import fields
 from django.db import models
 
 class CryptogaphicModel(models.Model):
