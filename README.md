@@ -15,6 +15,7 @@ pip install Django-CryptographicFields
 ```
 ## 3.Custom Encryption Key
 Set custom Encryption Key in settings.py
+Make sure that key length is greater than or 50 otherwise it will raise an error 
 ```py
 ENCRYPTION_KEY="your_key"
 ```
