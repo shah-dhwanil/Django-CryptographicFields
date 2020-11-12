@@ -7,6 +7,8 @@ __pycache__/
 # Distribution / packaging
 Django_CryptographicFields.egg-info/
 .Python
+src/
+docs/
 build/
 migrations/
 develop-eggs/
