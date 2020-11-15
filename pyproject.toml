@@ -2,7 +2,7 @@
 name = "Django-CryptographicFields"
 version = "2.0.1"
 description = "Django App for Cryptography in Django ORM"
-authors = ["Shahprogrammer <dhwanil38@gmail.com>"]
+authors = ["Shahprogrammer <71475691+Shahprogrammer@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
