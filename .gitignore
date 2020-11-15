@@ -7,6 +7,7 @@ __pycache__/
 # Distribution / packaging
 Django_CryptographicFields.egg-info/
 .Python
+poetry.lock
 src/
 docs/
 build/
