@@ -9,7 +9,7 @@ Django_CryptographicFields.egg-info/
 poetry.lock
 .Python
 src/
-docs/
+docs/build
 build/
 migrations/
 develop-eggs/
