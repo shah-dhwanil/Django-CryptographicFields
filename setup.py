@@ -7,7 +7,7 @@ setuptools.setup(
     name="Django-CryptographicFields", # Replace with your own username
     version="2.0.0",
     author="Shahprogrammer",
-    author_email="dhwanil38@gmail.com",
+    author_email="shahprogrammer05@gmail.com",
     description="A Django app for cryptography in Django Models.",
     long_description=long_description,
     long_description_content_type="text/markdown",
