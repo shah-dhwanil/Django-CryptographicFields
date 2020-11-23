@@ -6,10 +6,11 @@ __pycache__/
 *.so
 # Distribution / packaging
 Django_CryptographicFields.egg-info/
+poetry.lock
 .Python
 poetry.lock
 src/
-docs/
+docs/build
 build/
 migrations/
 develop-eggs/
@@ -52,7 +53,6 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
-setup.py
 # Translations
 *.mo
 *.pot

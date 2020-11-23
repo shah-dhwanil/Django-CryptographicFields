@@ -1,5 +1,6 @@
 # Django-CryptographicFields
-A Django app for using cryptography in Django Models. It support bi-directional cryptography  
+A Django app for using cryptography in Django Models. It support bi-directional cryptography.
+Check out the documentation :- [Django-CryptographicFields](https://django-cryptographicfields.readthedocs.io/en/latest/)
 # Quick start
 ## 1.Install Django-CryptographicFields
 Install Django CryptographicFields using PIP:-
