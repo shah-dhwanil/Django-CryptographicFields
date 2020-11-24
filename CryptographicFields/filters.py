@@ -26,7 +26,19 @@ def filter(queryset,lookup_function, field_name, query):
 
 
 def startswith(query: str, field_name: str, object):
+    """
+    Check if a string is Starts With the query
+    Check if a string is Starts With the query
 
+    :param query: [description]
+    :type query: str
+    :param field_name: [description]
+    :type field_name: str
+    :param object: [description]
+    :type object: [type]
+    :return: [description]
+    :rtype: [type]
+    """
     return str(getattr(object, field_name)).startswith(str(query))
 
 
