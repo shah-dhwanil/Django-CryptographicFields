@@ -21,7 +21,7 @@ def get_key(settings) -> str:
 
     """
     try:
-        cipher_key = getattr(settings,'ENCRYPTION_KEY')
+        cipher_key = getattr(settings,'CRYPTOGRAPHY_KEY')
     except AttributeError:
         cipher_key = getattr(settings,'SECRET_KEY')
     finally:
