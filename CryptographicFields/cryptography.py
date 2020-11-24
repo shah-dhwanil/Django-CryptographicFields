@@ -12,7 +12,7 @@ def get_key(settings) -> str:
     """
     Gets the encryption for encrypting & decrypting data.
 
-    Gets value from ENCRYPTION_KEY & if not defined then from SECRET_KEY
+    Gets value from CRYPTOGRAPHY_KEY & if not defined then from SECRET_KEY
     Checks the len of the key id less than 50 then raise LengthError
 
     :raises LengthError: It raises when the len of Encryption is less than 50 chars
