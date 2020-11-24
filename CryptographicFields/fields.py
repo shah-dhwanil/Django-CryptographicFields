@@ -36,7 +36,7 @@ class CharField(models.CharField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return decrypt(value).decode()
+        return decrypt(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
@@ -70,7 +70,7 @@ class BooleanField(models.BooleanField):
         return encrypt(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return literal_eval(decrypt(value).decode())
+        return literal_eval(decrypt(value))
 
     def clean(self, value, model_instance):
         """
@@ -100,7 +100,7 @@ class DateField(models.DateField):
         return encrypt(connection.ops.adapt_datefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value).decode()).date.date()
+        return Date(decrypt(value)).date.date()
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -138,7 +138,7 @@ class DateTimeField(models.DateTimeField):
         return encrypt(connection.ops.adapt_datetimefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value).decode()).date
+        return Date(decrypt(value)).date
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -177,7 +177,7 @@ class TimeField(models.TimeField):
         return encrypt(connection.ops.adapt_timefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value).decode()).date.time()
+        return Date(decrypt(value)).date.time()
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -213,7 +213,7 @@ class DecimalField(models.DecimalField):
         return encrypt(connection.ops.adapt_decimalfield_value(self.get_prep_value(value), self.max_digits, self.decimal_places))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return float(decrypt(value).decode())
+        return float(decrypt(value))
         # return value
 
     def clean(self, value, model_instance):
@@ -257,7 +257,7 @@ class FloatField(models.FloatField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return float(decrypt(value).decode())
+        return float(decrypt(value))
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
@@ -286,7 +286,7 @@ class IntegerField(models.IntegerField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return int(decrypt(value).decode())
+        return int(decrypt(value))
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
@@ -342,7 +342,7 @@ class GenericIPAddressField(models.GenericIPAddressField):
         return encrypt(connection.ops.adapt_ipaddressfield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return decrypt(value).decode()
+        return decrypt(value)
 
     def clean(self, value, model_instance):
         """
@@ -466,7 +466,7 @@ class TextField(models.TextField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return decrypt(value).decode()
+        return decrypt(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
@@ -554,8 +554,8 @@ class UUIDField(models.UUIDField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        # return UUID.hex(decrypt(value).decode())
-        return UUID(hex=decrypt(value).decode())
+        
+        return UUID(hex=decrypt(value))
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
@@ -584,7 +584,7 @@ class FilePathField(models.FilePathField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return decrypt(value).decode()
+        return decrypt(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
