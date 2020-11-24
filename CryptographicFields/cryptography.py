@@ -108,4 +108,4 @@ def decrypt(hexstring) -> bytearray:
     :return: bytes of decrypted string
     :rtype: bytearray
     """
-    return bytearray(AES.new(type_check(get_key(settings)[:32]), AES.MODE_CFB, type_check(get_key(settings)[-16:])).decrypt(type_check(from_hex(hexstring))))
+    return bytearray(AES.new(type_check(get_key(settings)[:32]), AES.MODE_CFB, type_check(get_key(settings)[-16:])).decrypt(type_check(from_hex(hexstring)))).decode()
