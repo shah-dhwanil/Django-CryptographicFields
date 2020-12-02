@@ -513,23 +513,23 @@ class BinaryField(models.BinaryField):
         return "TextField"
 
     def to_python(self, value: Any) -> Any:
-        value = self.clean(value, None)
         if isinstance(value, str):
-            value = bytes(value, "UTF-8").hex()
+            value = bytes(value, "UTF-8")
         elif isinstance(value, memoryview):
-            value = value.bytes.hex()
+            value = bytes(value)
+        value = self.clean(value, None)
         return value
 
     def get_prep_value(self, value: Any) -> Any:
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return decrypt(value)
+        return bytes.fromhex(decrypt(value))
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if not prepared:
             value = self.get_prep_value(value)
-        return encrypt(connection.Database.Binary(value))
+        return encrypt(bytes(connection.Database.Binary(value)).hex())
 
     def clean(self, value, model_instance):
         """
