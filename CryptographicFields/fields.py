@@ -98,7 +98,11 @@ class DateField(models.DateField):
         return encrypt(connection.ops.adapt_datefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return datetime.date.fromisoformat(decrypt(value))
+        try:
+            return datetime.date.fromisoformat(decrypt(value))
+        except AttributeError:
+            from timestring import Date
+            return Date(decrypt(value)).date.date()
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -136,7 +140,11 @@ class DateTimeField(models.DateTimeField):
         return encrypt(connection.ops.adapt_datetimefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return datetime.datetime.fromisoformat(decrypt(value))
+        try:
+            return datetime.datetime.fromisoformat(decrypt(value))
+        except AttributeError:
+            from timestring import Date
+            return Date(decrypt(value)).date
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -175,7 +183,11 @@ class TimeField(models.TimeField):
         return encrypt(connection.ops.adapt_timefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return datetime.time.fromisoformat(decrypt(value))
+        try:
+            return datetime.time.fromisoformat(decrypt(value))
+        except AttributeError:
+            from timestring import Date
+            return Date(decrypt(value)).date.time()
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
