@@ -100,7 +100,7 @@ class DateField(models.DateField):
         return encrypt(connection.ops.adapt_datefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value)).date.date()
+        return datetime.date.fromisoformat(decrypt(value))
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -138,7 +138,7 @@ class DateTimeField(models.DateTimeField):
         return encrypt(connection.ops.adapt_datetimefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value)).date
+        return datetime.datetime.fromisoformat(decrypt(value))
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
@@ -177,7 +177,7 @@ class TimeField(models.TimeField):
         return encrypt(connection.ops.adapt_timefield_value(value))
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        return Date(decrypt(value)).date.time()
+        return datetime.time.fromisoformat(decrypt(value))
 
     def pre_save(self, model_instance, add):
         if self.auto_now or (self.auto_now_add and add):
