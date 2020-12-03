@@ -41,7 +41,7 @@ The data will now be automatically encrypted when saved to the database.& decryp
 6. **_Supports 'time' lookup for TimeField_**
 
 # Requirements
-* Python (3.6+)
+* Python (3.7+)
 * Pycryptodome (3.9+)
 * Django (3.0+)
 * Timestring(1.6.0+)
