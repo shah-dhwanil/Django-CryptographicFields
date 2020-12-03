@@ -1,6 +1,5 @@
 from datetime import datetime
 from operator import attrgetter
-from .queryset import CryptographicQuerySet
 
 
 def filter(queryset,lookup_function, field_name, query):
