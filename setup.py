@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Development Status :: 5 - Production/Stable",
@@ -26,5 +26,5 @@ setuptools.setup(
     install_requires=[
           'django>=3.0.0','pycryptodome>=3.9.0','timestring>=1.6.0'
       ],
-  python_requires='>=3.6'
+  python_requires='>=3.7'
     )
