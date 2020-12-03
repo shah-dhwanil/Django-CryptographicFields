@@ -27,7 +27,8 @@ class Cryptography(unittest.TestCase):
         self.assertEqual(type_check(149),bytearray(str(149),"UTF-8"))
         self.assertEqual(type_check(True),bytearray(str(True),"UTF-8"))
         self.assertEqual(type_check(149.250),bytearray(str(149.250),"UTF-8"))
-        self.assertEqual(type_check(datetime.now()),bytearray(str(datetime.now()),"UTF-8"))
+        datetime=datetime.now()
+        self.assertEqual(type_check(datetime),bytearray(str(datetime),"UTF-8"))
         self.assertEqual(type_check(uuid5(NAMESPACE_URL,"www.google.com")),bytearray(str('c74a196f-f19d-5ea9-bffd-a2742432fc9c'),"UTF-8"))
 
     def test_to_hex(self):
