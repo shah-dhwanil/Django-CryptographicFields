@@ -5,10 +5,10 @@ description = "Django App for Cryptography in Django ORM"
 authors = ["Shahprogrammer <71475691+Shahprogrammer@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 Django = "^3.0.0"
 pycryptodome = "^3.9.0"
-timestring = "^1.6.0"
+
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^3.3.1"
