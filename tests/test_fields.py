@@ -1,4 +1,3 @@
-from datetime import date
 from django.conf import settings
 from CryptographicFields.fields import *
 from django.test import TestCase
