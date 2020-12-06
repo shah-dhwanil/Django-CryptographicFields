@@ -31,3 +31,14 @@ class DateTime(models.Model):
     date=DateField()
     time=TimeField()
     datetime=DateTimeField()
+
+class User(models.Model):
+    uuid=UUIDField()
+    username=CharField(max_length=20)
+    first_name=CharField(max_length=120)
+    last_name=CharField(max_length=120)
+    age=SmallIntegerField()
+    email=EmailField()
+    joined=DateTimeField()
+    
+
