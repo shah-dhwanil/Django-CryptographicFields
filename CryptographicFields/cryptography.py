@@ -12,7 +12,7 @@ def get_key(settings) -> str:
     """
     Gets the encryption for encrypting & decrypting data.
 
-    Gets value from CRYPTOGRAPHY_KEY & if not defined then from SECRET_KEY
+    Gets value from CRYPTOGRAPHIC_KEY & if not defined then from SECRET_KEY
     Checks the len of the key id less than 50 then raise LengthError
 
     :raises LengthError: It raises when the len of Encryption is less than 50 chars
@@ -21,9 +21,9 @@ def get_key(settings) -> str:
 
     """
     try:
-        cipher_key = getattr(settings,'CRYPTOGRAPHY_KEY')
+        cipher_key = getattr(settings, 'CRYPTOGRAPHIC_KEY')
     except AttributeError:
-        cipher_key = getattr(settings,'SECRET_KEY')
+        cipher_key = getattr(settings, 'SECRET_KEY')
     finally:
         if len(cipher_key) < 50:
             raise LengthError(len(cipher_key))
