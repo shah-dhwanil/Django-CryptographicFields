@@ -1,44 +1,51 @@
 from django.db import models
 from CryptographicFields.fields import *
 
+
 class Character(models.Model):
-    char=CharField(max_length=120)
-    email=EmailField()
-    text=TextField()
-    slug=SlugField()
-    ip=GenericIPAddressField()
-    url=URLField()
-    file=FilePathField(path="test/")
+    char = CharField(max_length=120)
+    email = EmailField()
+    text = TextField()
+    slug = SlugField()
+    ip = GenericIPAddressField()
+    url = URLField()
+    file = FilePathField(path="test/")
+
 
 class Numeric(models.Model):
-    bigint=BigIntegerField()
-    smallint=SmallIntegerField()
-    float=FloatField()
-    decimal=DecimalField(max_digits=10,decimal_places=2)
-    int=IntegerField()
-    positivebigint=PositiveBigIntegerField()
-    positiveint=PositiveIntegerField()
-    positivesmallint=PositiveSmallIntegerField()
+    bigint = BigIntegerField()
+    smallint = SmallIntegerField()
+    float = FloatField()
+    decimal = DecimalField(max_digits=10, decimal_places=2)
+    int = IntegerField()
+    positivebigint = PositiveBigIntegerField()
+    positiveint = PositiveIntegerField()
+    positivesmallint = PositiveSmallIntegerField()
+
 
 class Uuid(models.Model):
-    uuid=UUIDField()
+    uuid = UUIDField()
+
+
 class Binary(models.Model):
-    binary=BinaryField()
+    binary = BinaryField()
+
+
 class Boolean(models.Model):
-    boolean=BooleanField()
+    boolean = BooleanField()
+
 
 class DateTime(models.Model):
-    date=DateField()
-    time=TimeField()
-    datetime=DateTimeField()
+    date = DateField()
+    time = TimeField()
+    datetime = DateTimeField()
+
 
 class User(models.Model):
-    uuid=UUIDField()
-    username=CharField(max_length=20)
-    first_name=CharField(max_length=120)
-    last_name=CharField(max_length=120)
-    age=SmallIntegerField()
-    email=EmailField()
-    joined=DateTimeField()
-    
-
+    uuid = UUIDField()
+    username = CharField(max_length=20)
+    first_name = CharField(max_length=120)
+    last_name = CharField(max_length=120)
+    age = SmallIntegerField()
+    email = EmailField()
+    joined = DateTimeField()
