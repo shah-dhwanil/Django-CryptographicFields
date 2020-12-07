@@ -122,7 +122,7 @@ def _datetime_lte(query: Union[int, Union[date_, datetime, time_]], value: Union
     return value <= query
 
 
-def _datetime_range(query: list[Union[int, Union[date_, datetime, time_]], Union[int, Union[date_, datetime, time_]]], value: Union[int, Union[date_, datetime, time_]]) -> bool:
+def _datetime_range(query: Tuple[Union[int, Union[date_, datetime, time_]], Union[int, Union[date_, datetime, time_]]], value: Union[int, Union[date_, datetime, time_]]) -> bool:
     return query[0] < value < query[1]
 
 
@@ -176,7 +176,7 @@ def date_gte(query: Union[date_, datetime], field_name: str, object: Any) -> boo
     return _datetime_gte(query, value)
 
 
-def date_range(query: list[Union[date_, datetime], Union[date_, datetime]], field_name: str, object: Any) -> bool:
+def date_range(query: Tuple[Union[date_, datetime], Union[date_, datetime]], field_name: str, object: Any) -> bool:
     """
     Check if value of object is equal to query
     """
@@ -222,7 +222,7 @@ def year_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).year)
 
 
-def year_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def year_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -264,7 +264,7 @@ def month_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).month)
 
 
-def month_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def month_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -306,7 +306,7 @@ def day_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).day)
 
 
-def day_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def day_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -363,7 +363,7 @@ def time_gte(query: Union[time_, datetime], field_name: str, object: Any) -> boo
     return _datetime_gte(query, value)
 
 
-def time_range(query: list[Union[time_, datetime], Union[time_, datetime]], field_name: str, object: Any) -> bool:
+def time_range(query: Tuple[Union[time_, datetime], Union[time_, datetime]], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -409,7 +409,7 @@ def hour_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).hour)
 
 
-def hour_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def hour_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -451,7 +451,7 @@ def minute_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).minute)
 
 
-def minute_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def minute_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
@@ -490,7 +490,7 @@ def second_gte(query: int, field_name: str, object: Any) -> bool:
     return _datetime_gte(query, getattr(object, field_name).second)
 
 
-def second_range(query: list[int, int], field_name: str, object: Any) -> bool:
+def second_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     """
     Checks if value of object is equal to query
     """
