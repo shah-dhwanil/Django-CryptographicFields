@@ -564,7 +564,7 @@ class UUIDField(models.UUIDField):
         return self.to_python(value)
 
     def from_db_value(self, value: Any, expression: Any, connection: Any) -> Any:
-        
+
         return UUID(hex=decrypt(value))
 
     def get_db_prep_value(self, value, connection, prepared=False):
@@ -600,6 +600,7 @@ class FilePathField(models.FilePathField):
         if not prepared:
             value = self.get_prep_value(value)
         return encrypt(value)
+
     def clean(self, value, model_instance):
         """
         Convert the value's type and run validation. Validation errors
