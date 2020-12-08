@@ -1,9 +1,10 @@
-API documentation
-=================
+CryptographicFields package
+===========================
 
 .. toctree::
    :maxdepth: 4
 
    CryptographicFields.cryptography
    CryptographicFields.fields
-   CryptographicFields.utils
+   CryptographicFields.filters
+

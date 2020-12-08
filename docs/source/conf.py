@@ -23,7 +23,7 @@ copyright = '2020, Shahprogrammer'
 author = 'Shahprogrammer'
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0'
+release = '2.0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -43,6 +43,9 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
 ]
+autodoc_default_options = {
+    'member-order': 'bysource',
+}
 autosectionlabel_maxdepth = 5
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
