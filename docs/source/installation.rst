@@ -10,7 +10,7 @@ Installation
 * Python_ (3.6+)
 * Django_ (3.0+)
 * Pycryptodome_ (3.9+)
-* Timestring_ (1.6+) Mandatory for python < 3.8
+* Timestring_ (1.6+) Mandatory for python < 3.7
 
 .. _Python: https://www.python.org/
 .. _Django: https://www.djangoproject.com/
