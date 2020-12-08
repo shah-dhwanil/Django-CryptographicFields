@@ -2,7 +2,6 @@ from datetime import datetime, date as date_, time as time_
 from operator import attrgetter
 from typing import Any, Callable, Tuple, Union
 from django.db.models.query import QuerySet
-from re import Pattern
 from copy import deepcopy
 
 
@@ -519,7 +518,7 @@ def second_range(query: Tuple[int, int], field_name: str, object: Any) -> bool:
     return _datetime_range(query, getattr(object, field_name).second)
 
 
-def regex(query: Pattern, field_name: str, object: Any) -> bool:
+def regex(query: Any, field_name: str, object: Any) -> bool:
     """
     Checks if query pattern is present in value of object
     """
