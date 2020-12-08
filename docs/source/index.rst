@@ -11,6 +11,7 @@ the Python Pycryptodome_ library.
    installation
    settings
    Fields
+   Filters
    examples
    api/CryptographicFields
    

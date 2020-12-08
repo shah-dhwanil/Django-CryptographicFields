@@ -8,6 +8,7 @@ __pycache__/
 Django_CryptographicFields.egg-info/
 poetry.lock
 .Python
+poetry.lock
 src/
 docs/build
 build/
