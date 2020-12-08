@@ -146,3 +146,7 @@ class Filters(TestCase):
     def test_regex(self):
         self.assertEqual(self.get_data(sort(self.queryset, regex, "email", compile(
             r'[a-zA-z0-9_]+@\w+\.\w'))), [self.user1, self.user2, self.user3, self.user4, self.user5, self.user6])
+
+    def test__startswith(self):
+        data=[i for i in User.objects.filter(username__startswith="a")]
+        self.assertEqual(data,[self.user1,self.user6])
