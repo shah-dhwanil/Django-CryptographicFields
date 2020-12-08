@@ -1,6 +1,13 @@
 # Django-CryptographicFields
 A Django app for using cryptography in Django Models. It support bi-directional cryptography.
-Check out the documentation :- [Django-CryptographicFields](https://django-cryptographicfields.readthedocs.io/en/latest/)
+
+Check out the documentation  :- [Django-CryptographicFields](https://django-cryptographicfields.readthedocs.io/en/latest/)
+
+# Requirements
+* Python (3.6+)
+* Pycryptodome (3.9+)
+* Django (3.0+)
+* Timestring (1.6.0+) Mandatory if python < 3.8
 # Quick start
 ## 1.Install Django-CryptographicFields
 Install Django CryptographicFields using PIP:-
@@ -18,7 +25,7 @@ pip install Django-CryptographicFields
 Set custom Encryption Key in settings.py
 Make sure that key length is greater than or equal to 50 otherwise it will raise an error 
 ```py
-ENCRYPTION_KEY="your_key"
+CRYPTOGRAPHIC_KEY="your_key"
 ```
 # Creating Models using CryptographicFields
 
@@ -36,33 +43,10 @@ The data will now be automatically encrypted when saved to the database.& decryp
 1. **_Supports data retrival_**
 2. **_Supports custom query_**
 3. **_Supports Q() queries_**
+3. **_Supports Ordering data through python functions_**
+3. **_Supports Sorting data through python functions_**
 4. **_Supports 'startswith' lookups for all String Based Fields_**
 5. **_Supports 'date' lookup for Date,DateTime Fields_**
 6. **_Supports 'time' lookup for TimeField_**
 
-# Requirements
-* Python (3.7+)
-* Pycryptodome (3.9+)
-* Django (3.0+)
-# List of Model Fields supported by CryptographicFields:
-* ___BigIntegerField___
-* ___BooleanField___
-* ___BinaryField___
-* ___CharField___
-* ___DateField___
-* ___DateTimeField___
-* ___DecimalField___
-* ___EmailField___
-* ___FilePathField___
-* ___FloatField___
-* ___IntegerField___
-* ___GenericIPAddressField___
-* ___PositiveBigIntegerField___
-* ___PositiveIntegerField___
-* ___PositiveSmallIntegerField___
-* ___SlugField___
-* ___SmallIntegerField___
-* ___TextField___
-* ___URLField___
-* ___UUIDField___
-* ___TimeField___
+For More Information check out the documentation :- [Django-CryptographicFields](https://django-cryptographicfields.readthedocs.io/en/latest/)
