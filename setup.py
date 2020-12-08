@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Django-CryptographicFields",
-    version="2.0.1",
+    version="2.1.0",
     author="Shahprogrammer",
     author_email="shahprogrammer05@gmail.com",
     description="A Django app for cryptography in Django Models.",

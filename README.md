@@ -7,7 +7,7 @@ Check out the documentation  :- [Django-CryptographicFields](https://django-cryp
 * Python (3.6+)
 * Pycryptodome (3.9+)
 * Django (3.0+)
-* Timestring (1.6.0+) Mandatory if python < 3.8
+* Timestring (1.6.0+) Mandatory if python < 3.7
 # Quick start
 ## 1.Install Django-CryptographicFields
 Install Django CryptographicFields using PIP:-
